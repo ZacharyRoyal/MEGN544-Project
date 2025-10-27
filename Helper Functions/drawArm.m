@@ -24,7 +24,7 @@ end
 % Default wall: vertical plane at y = yWall
 if ~exist('wallPlane','var') || isempty(wallPlane)
     yWall = 1.2;
-    wallPlane.n = [0;1;0];       % normal along +y
+    wallPlane.n = [0;5;0];       % normal along +y
     wallPlane.p0 = [0;yWall;0];  % point on the plane
 end
 
