@@ -5,7 +5,6 @@
 % TargetPose - the target the arm is trying to reach
 % figureNum - the figure number to plot the arm in, if it is not provided,
 % a new figure will be generated
-%%
 
 function drawArm(t1,t2,t3, figureNum, TargetPose)
 
