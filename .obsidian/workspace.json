@@ -1,0 +1,179 @@
+{
+  "main": {
+    "id": "96e105ce9ed1d1c4",
+    "type": "split",
+    "children": [
+      {
+        "id": "ceef47e3a1d0e0f5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "915499b99c109dc0",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Arm Zero Angle.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Arm Zero Angle"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "221294f642e2a843",
+    "type": "split",
+    "children": [
+      {
+        "id": "a5763b6d895c2987",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5987fc65e43f03fd",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "bf9fdb2a4896f1c2",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "1d50600f22d7255c",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "b00fa1775026e365",
+    "type": "split",
+    "children": [
+      {
+        "id": "97afb2927ed33785",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a9f02304671c928f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Arm Zero Angle.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Arm Zero Angle"
+            }
+          },
+          {
+            "id": "65a276bd8a0b3e92",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Arm Zero Angle.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Arm Zero Angle"
+            }
+          },
+          {
+            "id": "5caf0d10f7e50601",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "9692f6c733f97d69",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Arm Zero Angle.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Arm Zero Angle"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "obsidian-excalidraw-plugin:New drawing": false
+    }
+  },
+  "active": "915499b99c109dc0",
+  "lastOpenFiles": [
+    "calCubicInterp.m",
+    "calCubicCoeffs.m",
+    "Helper Functions/quiver_T.m",
+    "Helper Functions/animateArm.m",
+    "Arm Zero Angle.md"
+  ]
+}
