@@ -5,8 +5,8 @@ clear; clc; close all;
 nSteps = 100;
 t = linspace(0, 2*pi, nSteps);
 
-t1_traj = t;                 % sweep
-t2_traj = .0000001*t;      % oscillate
+t1_traj = .5*sin(t)-pi/2;                 % sweep
+t2_traj = .5*cos(t)-pi;      % oscillate
 t3_traj = .000001*t;      % oscillate
 
 % Wall plane
