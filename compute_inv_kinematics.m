@@ -46,6 +46,6 @@ function [thetas]  = compute_inv_kinematics(x, y, z)
     a3 = 5;
     theta_2 = asin((pz - d1) /a3);
     theta_3 = 0;
-    thetas = [theta_1, theta_2, theta_3];
+    thetas = [theta_1, theta_2, theta_3]';
 end
 

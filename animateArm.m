@@ -1,41 +1,47 @@
-function animateArm(traj, wallPlane, laserLen)
+function animateArm(traj)
     %% traj: N x 3 matrix of joint angles [t1 t2 t3]
     %% wallPlane, laserLen: optional, passed to drawArm
-    nSteps = size(traj,1);
+    nSteps = max(size(traj));
     fig = figure(1);
+
+    yWall = 1.2;
+    wallPlane.n = [0;5;0];       % normal along +y
+    wallPlane.p0 = [0;yWall;0];  % point on the plane
+    
+    laserLen = 2.0;
     
     % Store drawn points (with NaN gaps)
     drawn = nan(nSteps,3);
     
     for k = 1:nSteps
-        t1 = traj(k,1);
-        t2 = traj(k,2);
-        t3 = traj(k,3);
+        t1 = traj(1, k)
+        t2 = traj(2, k);
+        t3 = traj(3, k);
     
         % Draw arm and laser
-        drawArm(t1, t2, t3, fig, wallPlane, laserLen);
+        drawArm(t1, t2, t3, fig);
     
-        % Compute intersection again (or modify drawArm to return it)
-        [pHit, valid] = laserIntersection(t1,t2,t3,wallPlane);
+        % % Compute intersection again (or modify drawArm to return it)
+        % [pHit, valid] = laserIntersection(t1,t2,t3,wallPlane);
+        % 
+        % if valid
+        %     drawn(k,:) = pHit';
+        % else
+        %     drawn(k,:) = [NaN NaN NaN]; % break line
+        % end
+        % 
+        % % Overlay the drawn path
+        % hold on;
+        % plot3(drawn(:,1), drawn(:,2), drawn(:,3), 'm-','LineWidth',1.5);
+        % hold off;
     
-        if valid
-            drawn(k,:) = pHit';
-        else
-            drawn(k,:) = [NaN NaN NaN]; % break line
-        end
-    
-        % Overlay the drawn path
-        hold on;
-        plot3(drawn(:,1), drawn(:,2), drawn(:,3), 'm-','LineWidth',1.5);
-        hold off;
-    
-        pause(0.03);
+        pause(0.05);
     end
 end
 
 function [pHit, valid] = laserIntersection(t1,t2,t3,wallPlane)
     % Build transforms (same as in drawArm)
-    Rz1 = trotz(t1); Ry = troty(t2); Rz2 = trotz(t3);
+    Rz1 = rotZ(t1); Ry = rotY(t2); Rz2 = rotZ(t3);
     L1=0.8; L2=0.6; L3=0.4;
     T1 = Rz1*transl([0 0 L1]);
     T2 = T1*Ry*transl([L2 0 0]);
@@ -62,4 +68,3 @@ function [pHit, valid] = laserIntersection(t1,t2,t3,wallPlane)
         end
     end
 end
-

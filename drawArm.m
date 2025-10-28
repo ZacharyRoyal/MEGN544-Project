@@ -22,34 +22,41 @@ if ~exist('figureNum','var') || isempty(figureNum)
 end
 
 % Default wall: vertical plane at y = yWall
-if ~exist('wallPlane','var') || isempty(wallPlane)
-    yWall = 1.2;
-    wallPlane.n = [0;5;0];       % normal along +y
-    wallPlane.p0 = [0;yWall;0];  % point on the plane
-end
+% if ~exist('wallPlane','var') || isempty(wallPlane)
+%     yWall = 1.2;
+%     wallPlane.n = [0;5;0];       % normal along +y
+%     wallPlane.p0 = [0;yWall;0];  % point on the plane
+% end
+yWall = 1.2;
+wallPlane.n = [0;5;0];       % normal along +y
+wallPlane.p0 = [0;yWall;0];  % point on the plane
+
+laserLen = 2.0;
 
 % Default laser segment length for visualization
-if ~exist('laserLen','var') || isempty(laserLen)
-    laserLen = 2.0;
-end
+% if ~exist('laserLen','var') || isempty(laserLen)
+% end
 
 % Link lengths
-a1 = 0.1;
-a2 = 0.1;
-a3 = 0.1;
+d1 = 0.1;
+d2 = 0.1;
+a3 = 0;
 
 % Base frame and helpers
 T0 = eye(4);
 p0 = T0(1:3,4)';
 
-Rz1 = trotz(t1);
-Ry  = troty(t2);
-Rz2 = trotz(t3);
+Rz1 = rotZ(t1);
+Ry  = rotY(t2);
+Rz2 = rotZ(t3);
 
 % Serial chain with small translations for visibility
-T1 = T0 * Rz1 * transl([0 0 a1]);
-T2 = T1 * Ry  * transl([a2 0 0]);
-T3 = T2 * Rz2 * transl([a3 0 0]);
+% T1 = T0 * Rz1 * transl([0 0 d1]);
+% T2 = T1 * Ry  * transl([d2 0 0]);
+% T3 = T2 * Rz2 * transl([a3 0 0]);
+T1 = compute_forward_kinematics(t1, t2, t3, 1);
+T2 = compute_forward_kinematics(t1, t2, t3, 2);
+T3 = compute_forward_kinematics(t1, t2, t3, 3);
 
 % Arm points
 p1 = T1(1:3,4)';
@@ -105,25 +112,5 @@ axis([-2,2,-2,2,0,2])
 title('3-axis ZYZ arm with laser intersection')
 hold off;
 
-end
-
-%% Helpers
-function T = trotz(theta)
-T = [cos(theta) -sin(theta) 0 0;
-     sin(theta)  cos(theta) 0 0;
-     0           0          1 0;
-     0           0          0 1];
-end
-
-function T = troty(theta)
-T = [cos(theta)  0 sin(theta) 0;
-     0           1 0          0;
-    -sin(theta)  0 cos(theta) 0;
-     0           0 0          1];
-end
-
-function T = transl(v)
-T = eye(4);
-T(1:3,4) = v(:);
 end
 

@@ -22,7 +22,7 @@
 % 10891021
 % MEGN 544
 % 2025-10-14
-function V_evals = calCubicInterp(v0, vf, a0, a1, a2, a3, t0, T_evals)
+function [V_evals] = calCubicInterp(v0, vf, a0, a1, a2, a3, t0, T_evals)
 
     cubic_func = @(t) a0 + a1.*t + a2.*(t.^2) + a3.*(t.^3);
     %fplot(cubic_func, [t0, T_evals(end)])
