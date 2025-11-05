@@ -11,7 +11,7 @@
 % t3 = joint 3's angle 
 % joint_num = desired joint to give pose for 
 function [T] = compute_forward_kinematics(t1, t2, t3, joint_num)
-    a = [0; 0; 5];
+    a = [0; 0; 0];
     d = [0.1; 0.1; 0];
     alpha = [pi/2; -pi/2; 0];
     theta = [t1; t2; t3];

@@ -1,116 +1,39 @@
-%% drawArm(t1,t2,t3, figureNum) takes in the joint parameters for
-% the arm as described in our project and draws the configuration in 3D
-%
-% t1,t2,t3 - The variable DH parameters for the arm
-% figureNum - the figure number to plot the arm in, if it is not provided,
-% a new figure will be generated
-%%
-function drawArm(t1,t2,t3, figureNum, wallPlane, laserLen)
-%% drawArm(t1,t2,t3, figureNum, wallPlane, laserLen)
-% Draws a 3-axis ZYZ robot arm and a laser pointing to a wall.
-%
-% t1,t2,t3  : ZYZ joint angles (radians)
-% figureNum : optional figure handle/number
-% wallPlane : optional struct with fields:
-%             .n  (3x1 unit normal) and .p0 (3x1 point on the plane)
-%             default: z = zWall (n = [0;0;1], p0 = [0;0;zWall])
-% laserLen  : optional finite length for drawing the laser ray segment
-%             (only for visualization). Intersection is computed analytically.
+function [laser_point] = drawArm(thetas, ax)
+    % drawArm: draw the 3-axis arm and return laser pointer direction
+    % thetas = [theta1; theta2; theta3]
+    % ax = axis handle for 3D plot
 
-if ~exist('figureNum','var') || isempty(figureNum)
-    figureNum = figure();
-end
+    % Compute forward kinematics for each joint
+    T1 = compute_forward_kinematics(thetas(1), 0, 0, 1);
+    T2 = compute_forward_kinematics(thetas(1), thetas(2), 0, 2);
+    T3 = compute_forward_kinematics(thetas(1), thetas(2), thetas(3), 3);
 
-% Default wall: vertical plane at y = yWall
-% if ~exist('wallPlane','var') || isempty(wallPlane)
-%     yWall = 1.2;
-%     wallPlane.n = [0;5;0];       % normal along +y
-%     wallPlane.p0 = [0;yWall;0];  % point on the plane
-% end
-yWall = 1.2;
-wallPlane.n = [0;5;0];       % normal along +y
-wallPlane.p0 = [0;yWall;0];  % point on the plane
+    % Extract joint positions
+    p0 = [0;0;0];
+    p1 = T1(1:3,4);
+    p2 = T2(1:3,4);
+    p3 = T3(1:3,4);
 
-laserLen = 2.0;
+    % Laser direction: assume pointing along +x of end-effector frame
+    laser_dir = T3(1:3,1); % x-axis of end-effector
+    laser_point = p3 + 5*laser_dir; % extend a bit outward
 
-% Default laser segment length for visualization
-% if ~exist('laserLen','var') || isempty(laserLen)
-% end
+    % Plot arm in 3D
+    cla(ax);
+    plot3(ax, [p0(1) p1(1) p2(1) p3(1)], ...
+              [p0(2) p1(2) p2(2) p3(2)], ...
+              [p0(3) p1(3) p2(3) p3(3)], 'bo-','LineWidth',2);
+    hold(ax,'on');
+    plot3(ax, [p3(1) laser_point(1)], ...
+              [p3(2) laser_point(2)], ...
+              [p3(3) laser_point(3)], 'r-','LineWidth',2);
+    plot3(ax, laser_point(1), laser_point(2), laser_point(3), 'rx','MarkerSize',10);
 
-% Link lengths
-d1 = 0.1;
-d2 = 0.1;
-a3 = 0;
+    xlabel(ax,'X'); ylabel(ax,'Y'); zlabel(ax,'Z');
+    axis(ax,[-1 10 -5 5 -1 6]);
+    grid(ax,'on'); view(ax,3);
+    title(ax,'3D Arm with Laser');
 
-% Base frame and helpers
-T0 = eye(4);
-p0 = T0(1:3,4)';
-
-Rz1 = rotZ(t1);
-Ry  = rotY(t2);
-Rz2 = rotZ(t3);
-
-% Serial chain with small translations for visibility
-% T1 = T0 * Rz1 * transl([0 0 d1]);
-% T2 = T1 * Ry  * transl([d2 0 0]);
-% T3 = T2 * Rz2 * transl([a3 0 0]);
-T1 = compute_forward_kinematics(t1, t2, t3, 1);
-T2 = compute_forward_kinematics(t1, t2, t3, 2);
-T3 = compute_forward_kinematics(t1, t2, t3, 3);
-
-% Arm points
-p1 = T1(1:3,4)';
-p2 = T2(1:3,4)';
-p3 = T3(1:3,4)';
-
-% End-effector rotation and laser direction (local x-axis)
-R  = T3(1:3,1:3);
-d  = R(:,1);         % laser points along EE x-axis
-o  = p3(:);          % laser origin
-
-% Laser-wall intersection (ray-plane)
-% Solve for t: o + t d lies on plane with normal n through p0
-n = wallPlane.n(:) / norm(wallPlane.n);
-p0w = wallPlane.p0(:);
-den = dot(n, d);
-if abs(den) < 1e-9
-    tHit = NaN;          % nearly parallel: no intersection
-    pHit = [NaN;NaN;NaN];
-else
-    tHit = dot(n, (p0w - o)) / den;
-    pHit = o + tHit * d;
-end
-
-% Collect points and plot arm
-L = [p0; p1; p2; p3];
-figure(figureNum)
-plot3(L(:,1),L(:,2),L(:,3),'y-','LineWidth',2); hold on;
-plot3(L(:,1),L(:,2),L(:,3),'ko','MarkerSize',6,'MarkerFaceColor','k');
-
-% Plot laser ray (finite segment for visualization)
-laserEnd = o + laserLen * d;
-plot3([o(1) laserEnd(1)], [o(2) laserEnd(2)], [o(3) laserEnd(3)], 'r--', 'LineWidth', 1.5);
-
-% Plot wall as a transparent patch (optional: only for y = const planes)
-if norm(n - [0;1;0]) < 1e-12
-    yWall = p0w(2);
-    s = 2.0;
-    [Xw,Zw] = meshgrid(linspace(-s,s,2), linspace(0,2,2));
-    Yw = yWall * ones(size(Xw));
-    surf(Xw, Yw, Zw, 'FaceAlpha', 0.05, 'EdgeColor', 'none', ...
-         'FaceColor', [0.6 0.6 0.9]);
-end
-
-% Plot intersection point if it exists in front of the arm
-if ~isnan(tHit) && tHit > 0
-    plot3(pHit(1), pHit(2), pHit(3), 'm.', 'MarkerSize', 18);
-end
-
-axis equal; grid on;
-xlabel('X'); ylabel('Y'); zlabel('Z');
-axis([-2,2,-2,2,0,2])
-title('3-axis ZYZ arm with laser intersection')
-hold off;
-
+    hold(ax,'off');
 end
 
