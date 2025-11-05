@@ -4,9 +4,8 @@ function animateArm(traj)
     nSteps = max(size(traj));
     fig = figure(1);
 
-    yWall = 1.2;
-    wallPlane.n = [0;5;0];       % normal along +y
-    wallPlane.p0 = [0;yWall;0];  % point on the plane
+    wallPlane.n = [-1;0;0];       % normal along +y
+    wallPlane.p0 = [1;0;0];  % point on the plane
     
     laserLen = 2.0;
     
@@ -22,18 +21,18 @@ function animateArm(traj)
         drawArm(t1, t2, t3, fig);
     
         % % Compute intersection again (or modify drawArm to return it)
-        % [pHit, valid] = laserIntersection(t1,t2,t3,wallPlane);
-        % 
-        % if valid
-        %     drawn(k,:) = pHit';
-        % else
-        %     drawn(k,:) = [NaN NaN NaN]; % break line
-        % end
-        % 
-        % % Overlay the drawn path
-        % hold on;
-        % plot3(drawn(:,1), drawn(:,2), drawn(:,3), 'm-','LineWidth',1.5);
-        % hold off;
+        [pHit, valid] = laserIntersection(t1,t2,t3,wallPlane);
+        
+        if valid
+            drawn(k,:) = pHit';
+        else
+            drawn(k,:) = [NaN NaN NaN]; % break line
+        end
+        
+        % Overlay the drawn path
+        hold on;
+        plot3(drawn(:,1), drawn(:,2), drawn(:,3), 'm-','LineWidth',1.5);
+        hold off;
     
         pause(0.05);
     end
@@ -42,10 +41,31 @@ end
 function [pHit, valid] = laserIntersection(t1,t2,t3,wallPlane)
     % Build transforms (same as in drawArm)
     Rz1 = rotZ(t1); Ry = rotY(t2); Rz2 = rotZ(t3);
+
+    Rz1_T = eye(4);
+    Rz1_T(1:3,1:3) = Rz1;
+
+    Ry_T = eye(4);
+    Ry_T(1:3,1:3) = Ry;
+
+    Rz2_T = eye(4);
+    Rz2_T(1:3,1:3) = Rz2;
+
     L1=0.8; L2=0.6; L3=0.4;
-    T1 = Rz1*transl([0 0 L1]);
-    T2 = T1*Ry*transl([L2 0 0]);
-    T3 = T2*Rz2*transl([L3 0 0]);
+
+    L1_T = eye(4); 
+    L1_T(1:3,4) = [0 0 L1];
+
+    L2_T = eye(4); 
+    L2_T(1:3,4) = [L2 0 0];
+
+    L3_T = eye(4); 
+    L3_T(1:3,4) = [L3 0 0];
+    
+
+    T1 = Rz1_T*L1_T;
+    T2 = T1*Ry_T*L2_T;
+    T3 = T2*Rz2_T*L3_T;
     
     o = T3(1:3,4);
     R = T3(1:3,1:3);
