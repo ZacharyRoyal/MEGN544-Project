@@ -7,7 +7,7 @@ function value = dhTable(link, column)
     %         [a,   d,   alpha,   theta_offset]
     table = [0,   0.1,    pi/2,   0;
             0,   0.1,   -pi/2,    0  ;
-            5,     0,       0,    0];
+            1,     0,       0,    0];
     
     % Assemble the final table
     if strcmp(column, 'a')

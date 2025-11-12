@@ -17,11 +17,7 @@ function [T] = compute_forward_kinematics(theta, joint_num)
         a_i = dhTable(i, 'a');
         d_i = dhTable(i, 'd');
         alpha_i = dhTable(i, 'alpha');
-        current_joint_T = dhTransform(a_i ...
-                                    , d_i, ...
-                                    alpha_i, theta(i));
+        current_joint_T = dhTransform(a_i , d_i, alpha_i, theta(i));
         T = T * current_joint_T;
-
     end
-
 end
