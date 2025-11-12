@@ -4,7 +4,7 @@ function animateArm(ikSolutions)
     % ikSolutions = 3 x N matrix of joint angles over time
 
     N = size(ikSolutions, 2);
-    wall_x = 5;
+    wall_x = 10;
     points = [ [wall_x; -5; -5] [wall_x; 5; -5] [wall_x; 5; 5] [wall_x; -5; 5]  ];
 
     % Prepare figure windows
