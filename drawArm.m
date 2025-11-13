@@ -4,15 +4,15 @@ function [laser_point] = drawArm(thetas, ax)
     % ax = axis handle for 3D plot
 
     % Compute forward kinematics for each joint
-    T1 = compute_forward_kinematics(thetas(1), 0, 0, 1);
-    T2 = compute_forward_kinematics(thetas(1), thetas(2), 0, 2);
-    T3 = compute_forward_kinematics(thetas(1), thetas(2), thetas(3), 3);
+    T1 = compute_forward_kinematics(thetas, 1);
+    T2 = compute_forward_kinematics(thetas, 2);
+    T3 = compute_forward_kinematics(thetas, 3);
 
     % Extract joint positions
     p0 = [0;0;0];
-    p1 = T1(1:3,4);
-    p2 = T2(1:3,4);
-    p3 = T3(1:3,4);
+    p1 = get_disp(T1);
+    p2 = get_disp(T2);
+    p3 = get_disp(T3);
 
     % Laser direction: assume pointing along +x of end-effector frame
     laser_dir = T3(1:3,1); % x-axis of end-effector

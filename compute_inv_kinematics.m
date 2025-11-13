@@ -33,17 +33,17 @@
 %     thetas = [theta_x, theta_y, theta_z ];
 % 
 % end
-function [thetas]  = compute_inv_kinematics(x, y, z)
-    px = x;
-    py = y;
-    pz = z;
-    d1 = 0.1;
-    d2 = 0.1;
+function [thetas]  = compute_inv_kinematics(px, py, pz)
+
+    d2 = dhTable(2, 'd');
+    d1 = dhTable(1, 'd');
+    a3 = dhTable(3, 'a');
+
     r = sqrt(px^2 + py^2);
     psi = 2 * atan(sqrt((r-d2)/(r+d2)));
     phi = atan2(py, px);
     theta_1 = phi + (pi/2) - psi;
-    a3 = 5;
+
     theta_2 = asin((pz - d1) /a3);
     theta_3 = 0;
     thetas = [theta_1, theta_2, theta_3]';

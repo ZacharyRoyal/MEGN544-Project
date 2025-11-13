@@ -10,21 +10,16 @@
 % t2 = joint 2's angle
 % t3 = joint 3's angle 
 % joint_num = desired joint to give pose for 
-function [T] = compute_forward_kinematics(t1, t2, t3, joint_num)
-    a = [0; 0; 0];
-    d = [0.1; 0.1; 0];
-    alpha = [pi/2; -pi/2; 0];
-    theta = [t1; t2; t3];
-    
-    T = zeros(4);
-    T(1,1) = 1;
-    T(2,2) = 1;
-    T(3,3) = 1;
-    T(4,4) = 1;
+function [T] = compute_forward_kinematics(theta, joint_num)
+    T = eye(4);
     
     for i = 1:1:joint_num
-       
-        current_joint_T = dhTransform(a(i), d(i), alpha(i), theta(i));
+        a_i = dhTable(i, 'a');
+        d_i = dhTable(i, 'd');
+        alpha_i = dhTable(i, 'alpha');
+        current_joint_T = dhTransform(a_i ...
+                                    , d_i, ...
+                                    alpha_i, theta(i));
         T = T * current_joint_T;
 
     end
