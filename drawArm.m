@@ -10,9 +10,9 @@ function [p3, laser_dir] = drawArm(thetas, ax)
 
     % Extract joint positions
     p0 = [0;0;0];
-    p1 = get_disp(T1);
-    p2 = get_disp(T2);
-    p3 = get_disp(T3);
+    p1 = get_displacement(T1);
+    p2 = get_displacement(T2);
+    p3 = get_displacement(T3);
 
     % Laser direction: assume pointing along +x of end-effector frame
     laser_dir = T3(1:3,1); % x-axis of end-effector
