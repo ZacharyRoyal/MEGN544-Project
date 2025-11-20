@@ -5,9 +5,10 @@ function value = dhTable(link, column)
     
     % Define parameters for each joint
     %         [a,   d,   alpha,   theta_offset]
-    table = [0,   0.1,    pi/2,   0;
-            0,   0.1,   -pi/2,    0  ;
-            .1,     0,       0,    0];
+    table = [0,  1,    pi/2,   0;
+            0,   1,   -pi/2,    0  ;
+            1.0,     0,       0,    0;
+            0,     0,      0,      0];
     
     % Assemble the final table
     if strcmp(column, 'a')

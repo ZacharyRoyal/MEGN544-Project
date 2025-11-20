@@ -39,10 +39,10 @@ function [thetas]  = compute_inv_kinematics(px, py, pz)
     d1 = dhTable(1, 'd');
     a3 = dhTable(3, 'a');
 
-    r = sqrt(px^2 + py^2);
-    psi = 2 * atan(sqrt((r-d2)/(r+d2)));
-    phi = atan2(py, px);
-    theta_1 = phi + (pi/2) - psi;
+    r = sqrt(px^2 + py^2)
+    psi = 2 * atan(sqrt((r-d2)/(r+d2)))
+    phi = atan2(py, px)
+    theta_1 = phi + (pi/2) - psi
 
     theta_2 = asin((pz - d1) /a3);
     theta_3 = 0;
