@@ -5,9 +5,9 @@ time_between_points = 2;
 granularity = 100;
 
 % define vector of target poses, must have at least two items
-target_poses= get_shape('line');
+target_poses= get_shape('circle');
 % Create Links given DH Table
-pose_count = 2;
+pose_count = length(target_poses);
 linkList = create_linklist();
 N_links = length(linkList);
 %target_poses = [[4.3802; 2.4133; 0.1], [2.2518; 3.7; 2.5999], [2.2152; 1.1634; 4.43]];
