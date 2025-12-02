@@ -18,7 +18,7 @@
 % Course Number
 % Date
 function [paramList, error] = dhInvKine(linkList, desTransform, paramListGuess)
-    opt_steps = 100;
+    opt_steps = 1000;
     tolerance = 1e-12;
     paramList = paramListGuess;
     T_des = desTransform;
@@ -35,7 +35,7 @@ function [paramList, error] = dhInvKine(linkList, desTransform, paramListGuess)
         delta_x = pinv(J_pos) * err_pos;
         
         paramList = paramList + delta_x;
-        paramList(1:3) = wrapToPi(paramList(1:3));
+        %paramList(1:3) = wrapToPi(paramList(1:3));
         if paramList(4) < 0
              paramList(4) = 0.1;
         end
