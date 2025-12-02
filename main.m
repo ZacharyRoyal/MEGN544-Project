@@ -3,9 +3,10 @@
 % pi = 3.1415;
 time_between_points = 2;
 granularity = 5;
+shape = 'cosine';
 
 % define vector of target poses, must have at least two items
-target_poses= get_shape('circle');
+target_poses= get_shape(shape);
 % Create Links given DH Table
 pose_count = size(target_poses, 2);
 linkList = create_linklist();
