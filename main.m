@@ -1,13 +1,13 @@
 
 % Constants
-pi = 3.1415;
+% pi = 3.1415;
 time_between_points = 2;
-granularity = 100;
+granularity = 500;
 
 % define vector of target poses, must have at least two items
-target_poses= get_shape('circle');
+target_poses= get_shape('line');
 % Create Links given DH Table
-pose_count = length(target_poses);
+pose_count = size(target_poses, 2);
 linkList = create_linklist();
 N_links = length(linkList);
 %target_poses = [[4.3802; 2.4133; 0.1], [2.2518; 3.7; 2.5999], [2.2152; 1.1634; 4.43]];
@@ -42,10 +42,10 @@ for i = 1:1:pose_count - 1
         T_des(1:3, 4) = [current_x; current_y; current_z];
         %sol_params =0;
         %err =0;
-        [sol_params, err] = dhInvKine(linkList, T_des, current_guess)
+        [sol_params, err] = dhInvKine(linkList, T_des, current_guess);
         ikSolutions(:, ik_index) = sol_params;
         current_guess = sol_params;
-        error = norm(err)
+        error = norm(err);
     end
 end
 %ikSolutions

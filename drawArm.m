@@ -39,13 +39,13 @@ function [p4, p3] = drawArm(thetas, ax)
     % (Using your dhTable values: [a, d, alpha, theta])
     
     % Link 1 (Rotary)
-    T1 = dhTransform(0, 1.0, pi/2, thetas(1));
+    T1 = dhTransform(dhTable(1, 'a'), dhTable(1, 'd'), dhTable(1, 'alpha'), thetas(1));
     
     % Link 2 (Rotary)
-    T2 = dhTransform(0, 1.0, -pi/2, thetas(2));
+    T2 = dhTransform(dhTable(1, 'a'), dhTable(2, 'd'), dhTable(2, 'alpha'), thetas(2));
     
     % Link 3 (Rotary - Wrist)
-    T3 = dhTransform(1.0, 0, 0, thetas(3));
+    T3 = dhTransform(dhTable(3, 'a'), dhTable(3, 'd'), dhTable(3, 'alpha'), thetas(3));
     
     % Link 4 (Prismatic - Laser)
     % a=0, d=thetas(4), alpha=0, theta=0

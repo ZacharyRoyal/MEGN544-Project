@@ -18,7 +18,7 @@
 % Course Number
 % Date
 function [paramList, error] = dhInvKine(linkList, desTransform, paramListGuess)
-    opt_steps = 1000;
+    opt_steps = 100;
     tolerance = 1e-12;
     paramList = paramListGuess;
     T_des = desTransform;
