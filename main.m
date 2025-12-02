@@ -2,7 +2,7 @@
 % Constants
 % pi = 3.1415;
 time_between_points = 2;
-granularity = 100;
+granularity = 5;
 
 % define vector of target poses, must have at least two items
 target_poses= get_shape('circle');
@@ -10,7 +10,6 @@ target_poses= get_shape('circle');
 pose_count = size(target_poses, 2);
 linkList = create_linklist();
 N_links = length(linkList);
-
 
 t = linspace(0, time_between_points, granularity)'; % Time vector for interpolation between each pair of points
 
@@ -44,5 +43,5 @@ for i = 1:1:pose_count - 1
         error = norm(err(1:3));
     end
 end
-%ikSolutions
+
 animateArm(ikSolutions);
