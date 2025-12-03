@@ -1,9 +1,8 @@
-
 % Constants
 % pi = 3.1415;
 time_between_points = 1;
 granularity = 5;
-shape = 'spiral';
+shape = 'heart';
 
 % define vector of target poses, must have at least two items
 target_poses= get_shape(shape);
@@ -16,7 +15,7 @@ N_links = length(linkList);
 start_time = 0;
 end_time = time_between_points * (virtual_pose_count-1);
 
-interpolation_times = linspace(start_time, end_time, granularity*virtual_pose_count)'; % Time vector for interpolation between each pair of points
+interpolation_times = linspace(start_time, end_time, granularity*pose_count)'; % Time vector for interpolation between each pair of points
 waypoint_times = start_time:time_between_points:end_time;
 % pad poses for const accel interp
 target_poses = [target_poses(:,1), target_poses];
