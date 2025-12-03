@@ -15,7 +15,7 @@ function poses = get_shape(shape)
          % Define Circle Parameters
          center = [9.8; 0; 1.5]; % Center on the wall at (X=9.8, Y=0, Z=0)
          radius = 3.0;
-         num_points = 50; % More points = smoother circle
+         num_points = 20; % More points = smoother circle
          
          % Generate angles from 0 to 2*pi
          theta = linspace(0, 2*pi, num_points);
