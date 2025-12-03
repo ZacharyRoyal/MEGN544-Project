@@ -1,14 +1,9 @@
 
 % Constants
 % pi = 3.1415;
-<<<<<<< HEAD
 time_between_points = 1;
-granularity = 10;
-=======
-time_between_points = 2;
 granularity = 5;
-shape = 'cosine';
->>>>>>> fb3cd8781da18bac239163a01e713c31eb1f24f4
+shape = 'spiral';
 
 % define vector of target poses, must have at least two items
 target_poses= get_shape(shape);
