@@ -1,6 +1,6 @@
 function poses = get_shape(shape)
 
-    wall_x = 9.8;
+    wall_x = 10;
     center_y = 0;
     center_z = 2.0;
     num_points = 50;
