@@ -1,6 +1,6 @@
 % Constants
 time_between_points = 1;
-total_samples = 200; % due to rounding and fixed waypoint counts will only be a rough estimate
+total_samples = 200; % due to rounding and fixed waypoint counts this will only be a rough estimate
 shape = 'spiral';
 target_poses = get_shape(shape);
 granularity = round(total_samples/max(size(target_poses))) + 1;
