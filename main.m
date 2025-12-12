@@ -50,8 +50,8 @@ end
 for i = 1:1:length(interpolation_times)
     [q, qdot, qddot] = constAccelInterp(interpolation_times(i), joint_targets', turn_sharpness);
     ikSolutions(:, i) = q; % store that solution
-    %[Jv, Jvdot] = velocityJacobian(linkList, q, qdot);
-    %torques(:, i) = newtonEuler(linkList, q, qdot, qddot, boundary_conditions);
+    %[Jv, Jvdot] = velocityJacobian(linkList(1:3), q, qdot);
+    %torques(:, i) = newtonEuler(linkList(1:3), q, qdot, qddot, boundary_conditions);
     torques(1,i) = sin(i);
     torques(2,i) = sin(i+pi/4);
     torques(3,i) = sin(i+pi);
