@@ -3,7 +3,7 @@
 time_between_points = 1;
 granularity = 5;
 shape = 'heart';
-use_image = True;
+use_image = true;
 
 % define vector of target poses, must have at least two items
 
@@ -14,13 +14,10 @@ else
     target_poses= get_shape(shape);
 end
 
-;
-granularity = 50;
-shape = 'triangle';
+
 turn_sharpness = 0.05;
 
-% define vector of target poses, must have at least two items
-target_poses = get_shape(shape);
+
 % Create Links given DH Table
 pose_count = size(target_poses, 2);
 virtual_pose_count = pose_count + 2; % need two spares for the contstant vel/accel interpolation
