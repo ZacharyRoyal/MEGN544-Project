@@ -3,9 +3,18 @@
 time_between_points = 1;
 granularity = 5;
 shape = 'heart';
+use_image = True;
 
 % define vector of target poses, must have at least two items
-target_poses= get_shape(shape);
+
+if use_image
+    time_between_points = 0.5;
+    target_poses = get_image_shape("\data\apple_image.jpg");
+else
+    target_poses= get_shape(shape);
+end
+
+;
 % Create Links given DH Table
 pose_count = size(target_poses, 2);
 virtual_pose_count = pose_count + 2;
