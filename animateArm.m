@@ -1,4 +1,4 @@
-function animateArm(ikSolutions)
+function animateArm(ikSolutions, torques)
     % animateArm: Animate 4-DOF Laser Arm
     
     N = size(ikSolutions, 2);
@@ -9,8 +9,9 @@ function animateArm(ikSolutions)
 
     figure(1); clf;
     pause(5)
-    arm_ax = subplot(1,2,1); 
-    wall_ax = subplot(1,2,2); 
+    arm_ax = subplot(1,3, 1); 
+    wall_ax = subplot(1,3,2); 
+    torque_ax = subplot(1,3,3);
     hold(wall_ax, 'on');
     xlabel(wall_ax, 'Y'); ylabel(wall_ax, 'Z');
     title(wall_ax, 'Laser Trace on Wall');
@@ -37,9 +38,16 @@ function animateArm(ikSolutions)
 
         % Store Y,Z for 2D plot
         laser_hits(:,k) = [p4(2); p4(3)];
-
+        
         % Update 2D Wall Plot
         plot(wall_ax, laser_hits(1,1:k), laser_hits(2,1:k), 'r.-');
+
+        % plot joint torques up to current point
+        hold(torque_ax, "on");
+        plot(torque_ax, torques(1,1:k), 'r.-');
+        plot(torque_ax, torques(2,1:k), 'g.-');
+        plot(torque_ax, torques(3,1:k), 'b.-');
+        hold(torque_ax, "off");
         
         drawnow;
         % pause(0.01); 
