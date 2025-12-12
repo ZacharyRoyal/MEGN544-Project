@@ -2,7 +2,14 @@
 time_between_points = 1;
 total_samples = 200; % due to rounding and fixed waypoint counts this will only be a rough estimate
 shape = 'spiral';
-target_poses = get_shape(shape);
+use_image = true;
+
+if use_image
+    target_poses = get_image_shape("data\apple_image.jpg");
+else
+    target_poses = get_shape(shape);
+end
+
 granularity = round(total_samples/max(size(target_poses))) + 1;
 turn_sharpness = max(min(0.5, 0.5/(granularity*0.25)), 0.05);
 
