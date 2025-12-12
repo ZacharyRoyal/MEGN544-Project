@@ -43,10 +43,12 @@ function animateArm(ikSolutions, torques)
         plot(wall_ax, laser_hits(1,1:k), laser_hits(2,1:k), 'r.-');
 
         % plot joint torques up to current point
-        hold(torque_ax, "on");
         plot(torque_ax, torques(1,1:k), 'r.-');
+        hold(torque_ax, "on");
+        title(torque_ax, 'Joint Torques');
         plot(torque_ax, torques(2,1:k), 'g.-');
         plot(torque_ax, torques(3,1:k), 'b.-');
+        legend(torque_ax, {"Joint 1 Torque", "Joint 2 Torque", "Joint 3 Torque"});
         hold(torque_ax, "off");
         
         drawnow;

@@ -1,9 +1,9 @@
 % Constants
 % pi = 3.1415;
 time_between_points = 1;
-granularity = 50;
+granularity = 100;
 shape = 'triangle';
-turn_sharpness = 0.05;
+turn_sharpness = 0.1;
 
 % define vector of target poses, must have at least two items
 target_poses = get_shape(shape);
@@ -33,7 +33,7 @@ boundary_conditions = struct(...
                             'base_angular_velocity', [0; 0; 0], ...
                             'base_angular_acceleration', [0; 0; 0], ...
                             'base_linear_acceleration', [0; 0; 9.8], ...
-                            'distal_forces', [0; 0; 0], ...
+                            'distal_force', [0; 0; 0], ...
                             'distal_torque', [0; 0; 0] ...
                             );
 
@@ -50,11 +50,8 @@ end
 for i = 1:1:length(interpolation_times)
     [q, qdot, qddot] = constAccelInterp(interpolation_times(i), joint_targets', turn_sharpness);
     ikSolutions(:, i) = q; % store that solution
-    %[Jv, Jvdot] = velocityJacobian(linkList(1:3), q, qdot);
-    %torques(:, i) = newtonEuler(linkList(1:3), q, qdot, qddot, boundary_conditions);
-    torques(1,i) = sin(i);
-    torques(2,i) = sin(i+pi/4);
-    torques(3,i) = sin(i+pi);
+    [Jv, Jvdot] = velocityJacobian(linkList(1:3), q, qdot);
+    torques(:, i) = newtonEuler(linkList(1:3), q(1:3), qdot(1:3), qddot(1:3), boundary_conditions);
     error = norm(err(1:3));
 end
 
