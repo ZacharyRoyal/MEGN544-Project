@@ -14,12 +14,14 @@ function linkList = create_linklist()
             link_i = createLink(a_i, [], alpha_i, 0, 0, 0, 0, 0);
         else    % Inertia tensor calculations
             if a_i == 0 % Links 1 and 2: hollow cylinder along z
+                link_len = d_i;
                 Ixx = (1/12) * mass * (3*(radius_outer^2 + radius_inner^2) + link_len^2);
                 Iyy = Ixx;
                 Izz = 0.5 * mass * (radius_outer^2 + radius_inner^2);
                 inertia_tensor = diag([Ixx, Iyy, Izz]);
                 cent_of_mass = [0; 0; link_len/2];
             else    % Link 3 along x
+                link_len = a_i;
                 Ixx = 0.5 * mass * (radius_outer^2 + radius_inner^2);
                 Iyy = (1/12) * mass * (3*(radius_outer^2 + radius_inner^2) + link_len^2);
                 Izz = Iyy;
