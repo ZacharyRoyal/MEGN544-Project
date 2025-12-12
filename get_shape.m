@@ -3,7 +3,7 @@ function poses = get_shape(shape)
     wall_x = 9.8;
     center_y = 0;
     center_z = 2.0;
-    num_points = 50;
+    num_points = 25;
 
     switch lower(shape)
         case 'line'
@@ -61,7 +61,7 @@ function poses = get_shape(shape)
             poses = [x; y; z];
 
         otherwise
-            error('Shape not recognized. Options: line, square, circle, sine, cosine, heart, spiral');
+            error('Shape not recognized. Options: line, square, circle, cosine, heart, spiral');
     end
     end
 

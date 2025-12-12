@@ -37,6 +37,7 @@ function animateArm(ikSolutions)
 
         % Store Y,Z for 2D plot
         laser_hits(:,k) = [p4(2); p4(3)];
+        
 
         % Update 2D Wall Plot
         plot(wall_ax, laser_hits(1,1:k), laser_hits(2,1:k), 'r.-');
