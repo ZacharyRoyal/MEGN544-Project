@@ -1,8 +1,9 @@
 % Constants
 % pi = 3.1415;
 time_between_points = 1;
-granularity = 25;
-shape = 'square';
+granularity = 50;
+shape = 'triangle';
+turn_sharpness = 0.05;
 
 % define vector of target poses, must have at least two items
 target_poses = get_shape(shape);
@@ -26,6 +27,15 @@ joint_targets = zeros(5, size(target_poses, 2));
 joint_targets(1, :) = waypoint_times;
 
 ikSolutions = zeros(N_links , length(interpolation_times)); % Preallocate for inverse kinematics solutions
+torques = zeros(3, length(interpolation_times));
+
+boundary_conditions = struct(...
+                            'base_angular_velocity', [0; 0; 0], ...
+                            'base_angular_acceleration', [0; 0; 0], ...
+                            'base_linear_acceleration', [0; 0; 9.8], ...
+                            'distal_forces', [0; 0; 0], ...
+                            'distal_torque', [0; 0; 0] ...
+                            );
 
 initial_guess = [0; 0; 0; 10];
 for i = 1:1:virtual_pose_count
@@ -38,10 +48,14 @@ for i = 1:1:virtual_pose_count
 end
 
 for i = 1:1:length(interpolation_times)
-    [q, qdot, qddot] = constAccelInterp(interpolation_times(i), joint_targets', 0.05);
+    [q, qdot, qddot] = constAccelInterp(interpolation_times(i), joint_targets', turn_sharpness);
     ikSolutions(:, i) = q; % store that solution
-    [Jv, Jvdot] = velocityJacobian(linkList, q, qdot);
+    %[Jv, Jvdot] = velocityJacobian(linkList, q, qdot);
+    %torques(:, i) = newtonEuler(linkList, q, qdot, qddot, boundary_conditions);
+    torques(1,i) = sin(i);
+    torques(2,i) = sin(i+pi/4);
+    torques(3,i) = sin(i+pi);
     error = norm(err(1:3));
 end
 
-animateArm(ikSolutions);
+animateArm(ikSolutions, torques);
