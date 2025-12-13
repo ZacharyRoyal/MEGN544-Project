@@ -2,7 +2,7 @@
 time_between_points = 1;
 total_samples = 200; % due to rounding and fixed waypoint counts this will only be a rough estimate
 shape = 'spiral';
-use_image = true;
+use_image = false;
 
 if use_image
     target_poses = get_image_shape("data\apple_image.jpg");
